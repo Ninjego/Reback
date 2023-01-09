@@ -1,6 +1,8 @@
 package me.ninjego.reback.managers;
 
+import me.ninjego.reback.Reback;
 import me.ninjego.reback.timestamp.Timestamp;
+import me.ninjego.reback.timestamp.User;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -9,17 +11,19 @@ import java.util.List;
 
 public class TrackManager {
 
-    private final HashMap<Player, List<Timestamp>> playerList;
+    private final HashMap<User, List<Timestamp>> playerList;
 
     public TrackManager() {
         playerList = new HashMap<>();
     }
 
     public void registerPlayer(Player player) {
-        if(playerList.containsKey(player)) {
-
+        User user = Reback.getInstance().getPlayerManager().getUser(player);
+        if(playerList.containsKey(user)) {
+            user.setTrack(true);
+            return;
         }
-        playerList.put(player, new ArrayList<>()); // Track player
+        playerList.put(user, new ArrayList<>()); // Track player
     }
 
     public void unregisterPlayer(Player player) {

@@ -1,6 +1,8 @@
 package me.ninjego.reback;
 
+import me.ninjego.reback.events.JoinEvent;
 import me.ninjego.reback.events.MoveEvent;
+import me.ninjego.reback.managers.PlayerManager;
 import me.ninjego.reback.managers.TrackManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,13 +11,19 @@ public final class Reback extends JavaPlugin {
 
     private static Reback instance;
 
-    private TrackManager playerManager;
+    private TrackManager trackManager;
+
+    private PlayerManager playerManager;
 
     public static Reback getInstance() {
         return instance;
     }
 
-    public TrackManager getPlayerManager() {
+    public TrackManager getTrackManager() {
+        return trackManager;
+    }
+
+    public PlayerManager getPlayerManager() {
         return playerManager;
     }
 
@@ -26,8 +34,11 @@ public final class Reback extends JavaPlugin {
         //Set instance
         instance = this;
 
+        //Register trackManager
+        trackManager = new TrackManager();
+
         //Register playerManager
-        playerManager = new TrackManager();
+        playerManager = new PlayerManager();
 
         //Register Event
         registerEvents();
@@ -41,5 +52,6 @@ public final class Reback extends JavaPlugin {
     public void registerEvents() {
         PluginManager pm = this.getServer().getPluginManager();;
         pm.registerEvents(new MoveEvent(), this);
+        pm.registerEvents(new JoinEvent(), this);
     }
 }
