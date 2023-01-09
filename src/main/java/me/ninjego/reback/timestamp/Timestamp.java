@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 
 public class Timestamp {
 
-    private Player player;
-    private long time;
-    private Location location;
+    private Player player; // Current player
+    private long time; // Timestamp of action
+    private Location location; // Location
 
     public Timestamp(Player player, long time, Location location) {
         this.player = player;
