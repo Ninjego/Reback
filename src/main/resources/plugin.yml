@@ -1,0 +1,6 @@
+name: Reback
+version: '${project.version}'
+main: me.ninjego.reback.Reback
+api-version: 1.19
+authors: [ Ninjego ]
+description: Replay player movements
