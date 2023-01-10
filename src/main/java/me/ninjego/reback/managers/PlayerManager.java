@@ -16,6 +16,28 @@ public class PlayerManager {
         userList = new ArrayList<>();
     }
 
+    public void toggleTrack(Player player) {
+
+        // Check if player is setup
+        if(getUser(player) == null) {
+            setupUser(player);
+        }
+
+        User user = getUser(player);
+        user.setTrack(!user.isTrack()); // Toggle track variable
+        updateUser(user); // Update user in userList
+    }
+
+    public void setTrack(Player player, boolean bool) {
+        if(getUser(player) == null) {
+            setupUser(player);
+        }
+
+        User user = getUser(player);
+        user.setTrack(bool);
+        updateUser(user);
+    }
+
     public void setupUser(Player player) {
 
         boolean exists = false;
@@ -25,12 +47,7 @@ public class PlayerManager {
                 continue;
             }
 
-            if(user.getUuid() != player.getUniqueId() && user.getUuid() != null) {
-                continue;
-            }
-
             user.setPlayer(player);
-            user.setUuid(player.getUniqueId());
             userList.set(i, user);
             exists = true;
         }
@@ -39,34 +56,7 @@ public class PlayerManager {
            return;
         }
 
-        User user = new User(player, player.getUniqueId());
-        userList.add(user);
-    }
-
-    public void setupUser(UUID uuid) {
-
-        boolean exists = false;
-        for(int i = 0; i < userList.size(); i++) {
-            User user = userList.get(i);
-            if(user.getPlayer() != Bukkit.getPlayer(uuid) && user.getPlayer() != null) {
-                continue;
-            }
-
-            if(user.getUuid() != uuid && user.getUuid() != null) {
-                continue;
-            }
-
-            user.setPlayer(Bukkit.getPlayer(uuid));
-            user.setUuid(uuid);
-            userList.set(i, user);
-            exists = true;
-        }
-
-        if(exists) {
-            return;
-        }
-
-        User user = new User(Bukkit.getPlayer(uuid), uuid);
+        User user = new User(player);
         userList.add(user);
     }
 
@@ -74,7 +64,17 @@ public class PlayerManager {
         return userList.stream().filter(user -> user.getPlayer() == player).findFirst().orElse(null);
     }
 
-    public User getUser(UUID uuid) {
-        return userList.stream().filter(user -> user.getUuid() == uuid).findFirst().orElse(null);
+    public void updateUser(User user) {
+
+        //Getting the index of the user.
+
+        for(int i = 0; i < userList.size(); i++) {
+            User u = userList.get(i);
+
+            if(u == user) {
+                userList.set(i, user);
+            }
+        }
     }
+
 }

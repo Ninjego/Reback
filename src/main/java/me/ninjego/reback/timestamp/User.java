@@ -2,41 +2,43 @@ package me.ninjego.reback.timestamp;
 
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class User {
 
     private Player player;
-    private UUID uuid;
     private boolean track;
+    private List<Timestamp> timestampList;
 
-    public User(Player player, UUID uuid) {
+    public User(Player player) {
         this.player = player;
-        this.uuid = uuid;
         this.track = false;
-    }
-
-    public UUID getUuid() {
-        return uuid;
+        this.timestampList = new ArrayList<>();
     }
 
     public Player getPlayer() {
         return player;
     }
 
-    public boolean isTrack() {
-        return track;
-    }
-
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public boolean isTrack() {
+        return track;
     }
 
     public void setTrack(boolean track) {
         this.track = track;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public List<Timestamp> getTimestampList() {
+        return timestampList;
+    }
+
+    public void setTimestampList(List<Timestamp> timestampList) {
+        this.timestampList = timestampList;
     }
 }
